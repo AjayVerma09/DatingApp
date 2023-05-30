@@ -13,7 +13,14 @@ loggedIn = false;
   constructor(private accountService: AccountService){}
 
   ngOnInit(): void {
-    
+    this.getCurrentUSer();
+  }
+
+  getCurrentUSer() {
+    this.accountService.currentUser$.subscribe({
+      next: user => this.loggedIn = !!user,
+      error: error => console.log(error)
+    })
   }
 
   login() {
@@ -29,6 +36,7 @@ loggedIn = false;
   }
 
   logout() {
+    this.accountService.logout();
     this.loggedIn = false;
   }
 
